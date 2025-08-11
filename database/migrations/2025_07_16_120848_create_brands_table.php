@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('brands', function (Blueprint $table) {
             // identifiant
             $table->id();
+            $table->foreignId('category_id')->constrained()->onDelete('cascade');
             //information
             $table->string('name');
             $table->string('image');

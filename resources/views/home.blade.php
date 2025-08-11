@@ -11,6 +11,7 @@
     </header>
 <body>
     <x-carousel/>
+    <x-category-list :categories="$categories" />
     <x-bestSellers/>
 </body>
 </html>
