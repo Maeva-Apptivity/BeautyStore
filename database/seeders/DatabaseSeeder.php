@@ -24,8 +24,13 @@ class DatabaseSeeder extends Seeder
         //     'last_name' => 'User',
         //     'email' => 'test@example.com',
         // ]);
-        
-    
+
+        // fonction pour appelé directement les factory 
+        $this->call([
+            CategorySeeder::class, // 1. Crée les catégories
+            BrandSeeder::class,    // 2. Crée les marques
+            ProductSeeder::class   // 3. Crée les produits 
+        ]);
     }
     
 }

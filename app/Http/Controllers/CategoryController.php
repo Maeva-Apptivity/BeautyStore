@@ -18,10 +18,13 @@ class CategoryController extends Controller
         return view('home',compact('categories'));
     }
 
-    public function getBrands($id)
+    public function getBrands($slug)
     {
-        $brands = Brand::where('category_id', $id)->get();
-        return response()->json($brands);
+        // Recherche le slug attribuué a la catégorie
+        $category = Category::where('name',$slug)->firstOrFail();
+
+        $brands = Brand::where('category_id', $category->id)->get();
+        return view('components.drop-down-categories',compact('brands', 'category'));
     }
 
     /**

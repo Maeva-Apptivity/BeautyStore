@@ -2,9 +2,7 @@
     @forelse ($categories as $category)
         <tr>  
             <td>
-                <span class="category-name" data-id="{{ $category->id }}">
-                    {{ $category->name }}
-                </span>
+                <a href="{{ route('show.brands', $category->slug) }}">{{ $category->name }}</a>
             </td>
         </tr>
     @empty

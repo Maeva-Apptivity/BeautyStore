@@ -14,9 +14,8 @@ use App\Http\Controllers\CategoryController;
 
         // Listing des categories (ex : skincare, makeup...)
         Route::get('/',[CategoryController::class,'index'])->name('category.list');
-
-        
-
+        // Listing des marques associées a la category séléctionner petit + (prend le slug au lieu de id)
+        Route::get('/{slug}',[CategoryController::class,'getBrands'])->name('show.brands');
     });
 
     // Route vers la une page définit pour les erreurs
