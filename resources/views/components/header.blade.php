@@ -13,12 +13,11 @@
         <label for="check" class="icons">
             <i class='bxr  bx-menu'  id="menu-icon"></i> 
             <i class='bxr  bxs-x'  id="close-icon"></i> 
-
         </label>
 
         <nav class="navbar">
-            <a href="" style="--i:0;">Home</a>
-            <a href="" style="--i:1;">Nails</a>
+            <a href="/" style="--i:0;">Home</a>
+            <a href="" style="--i:1;">search</a>
             <a href="" style="--i:2;">Make Up</a>
             <a href="" style="--i:3;">Contact</a>
         </nav>

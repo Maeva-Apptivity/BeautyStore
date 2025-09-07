@@ -1,4 +1,4 @@
-/* Variable de style */
+/* Variable de style  (théme)*/
 :root{
     /* genéral */
     --primary-color: #CC3AFB;
@@ -7,30 +7,38 @@
     --contrast-color: #FDF3FF;
     --background-color: #FFFFFF;
     --text-color: #212022;
+    --inverse-text-color:#FFFFFF;
     /* spécifique*/
-    --text-color-effect:#cc3afb;
+    --text-color-effect:#FDF3FF;
     --header-bg: rgba(255, 255, 255, 0.9);
     --header-color: rgba(0, 0, 0, .1);
     --carousel-button:#fff5;
 }
+
+/* Mode sombre */
 @media (prefers-color-scheme: dark) {
     :root {
     /* général */
+    --primary-color: #CC3AFB;
+    --secondary-color: #f5a7f7;
+    --accent-color: #ef00f3;
     --contrast-color: #2d2931;
     --background-color: #212022;
-    --secondary-color: #f1cdff;
+
     /* spécifique */
-    --header-bg: rgba(113, 1, 138, 0.46);
-    --header-color: rgba(0, 0, 0, .1);
+    --header-bg: rgba(255, 249, 249, 0.339);
+    --header-color: rgba(100, 98, 98, 0.1);
     --text-color: #ffffff;
-    --text-color-effect: #FFFFFF;
+    --inverse-text-color:#212022;
+    --text-color-effect: #212022;
     --carousel-button:rgba(154, 154, 154, 0.333);
     }
     .logo{
-        content: url("/assets/logo-light.png"); /* logo dark theme */
+        content: url("/assets/logo-light.png"); /* logo spécifique pour le mode sombre */
     }
 }
-/* Style géneral */
+
+/*******   STYLE GÉNÉRAL  ***********/
 * {
     margin: 0;
     padding: 0;
@@ -38,14 +46,14 @@
     scroll-behavior: smooth;
     font-family: "Poppins", sans-serif;
 }
-
-/* Styles pour la barre de navigation */
 body {
-    /* min-height: 100vh; */
     background-color: var(--background-color);
     margin: 0;
     font-family: "Poppins", sans-serif; 
+    margin-top: 100px;
 }
+
+/*******   BARRE DE NAVIGATION (composant : header)  ***********/
 .header {
     position: fixed;
     top: 0;
@@ -57,8 +65,9 @@ body {
     align-items: center;
     z-index: 100;
     height: 100px; /* Hauteur fixe pour toute la barre */
+    box-shadow: 0 .5rem 1rem var(--header-color);
 }
-
+/* Effet de fond translucide de la barre de navigation */
 .header::before {
     content: '';
     position: absolute;
@@ -69,9 +78,8 @@ body {
     background: var(--header-color);
     backdrop-filter: blur(50px);
     z-index: -1;
-    box-shadow: 0 .5rem 1rem var(--header-color);
 }
-
+/* Effet lumineux qui se déplace lors du survol */
 .header::after {
     content: '';
     position: absolute;
@@ -82,16 +90,15 @@ body {
     background: linear-gradient(90deg, transparent, var(--header-bg), transparent);
     transition: .5s;
 }
-
 .header:hover::after {
     left: 100%;
 }
-
+/* Logo de la barre de navigation */
 .logo {
     height: auto;
     width: 80px;
 }
-
+/* liens de navigation de la barre */
 .navbar a {
     font-size: 1.15rem;
     color:var(--text-color);
@@ -101,11 +108,11 @@ body {
     transition: 0.5s;
     margin-left: 2.5rem;
 }
-
+/* Checkbox du menu burger */
 #check {
     display: none;
 }
-
+/* Icones et menu responsives */
 .icons {
     position: absolute;
     right: 5%;
@@ -115,7 +122,7 @@ body {
     display: none;
 }
 
-/* Styles pour le carousel */
+/*******    CAROUSEL  (composant : Carousel) ***********/
 .slider {
     width: 100%;
     max-width: 100vw;
@@ -124,10 +131,8 @@ body {
     margin: auto;
     position: relative;
     overflow: hidden;
-    margin-top: 50px; /* distance entre la headerbar et le carousel*/
-    margin-bottom: 50px;
 }
-
+/* Liste d'images */
 .list {
     position: absolute;
     top: 0;
@@ -137,14 +142,13 @@ body {
     width: max-content;
     transition: 1s;
 }
-
 .list img {
     width: 100vw;
     max-width: 100vw;
     height: 100%;
     object-fit: cover;
 }
-
+/* Boutons prev et next */
 .buttons {
     position: absolute;
     top: 45%;
@@ -153,7 +157,6 @@ body {
     display: flex;
     justify-content: space-between;
 }
-
 .buttons button {
     width: 40px;
     height: 40px;
@@ -163,7 +166,7 @@ body {
     color: var(--background-color);
     border: none;
 }
-
+/* Point indicateur de slide  */
 .dots {
     position: absolute;
     bottom: 10px;
@@ -175,7 +178,6 @@ body {
     display: flex;
     justify-content: center;
 }
-
 .dots li {
     list-style: none;
     width: 10px;
@@ -185,25 +187,460 @@ body {
     border-radius: 20px;
     transition: 1s;
 }
-
 .dots li.active {
     width: 30px;
 }
-
-.title{
-    padding: 50px ; /* espace entre le titre et les produits */
+/*******    SECTION BEST SELLERS  (Composant : bestSellers)    ***********/
+.best-sellers-title{
+    padding: 50px ;
     transition: all 0.5s;
     -webkit-text-stroke: 4px var(--secondary-color);
     font-size: 8rem;
     text-align: center;
     color: transparent;
-}
-.title:hover{
+} 
+.best-sellers-title:hover{
     font-variation-settings: "wght" 100, "ital" 0;
     text-shadow: none;
+} 
+
+/*******    LISTE DES CATÉGORIES (category-list)  ***********/
+.category-list{
+    list-style: none;
+    text-align: center;
+    position: relative;
+    padding-bottom: 40px;
+    margin: 0;
+    background-color: var(--background-color-);
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    position: relative;
+    z-index: 900;
+    overflow: visible;   
 }
-.product{
-    background-color: var(--contrast-color);
+.category-list::after{
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 100%;
+    width: 100%;
+    height: 0;
+    z-index: 799;
+}
+.category-item{
+    position: static;
+    padding: 10px 20px;
+    color: var(--text-color);
+    border-radius: 80px;
+    border: 1px inset var(--primary-color);
+    cursor: pointer;
+    transition: background 0.3s;
+}
+.category-item:hover {
+    background: var(--secondary-color);
+    color: var(--background-color);
+}
+/*******   MENU DÉROULANT   ***********/ 
+.dropdown{
+    position: absolute;
+    top: 100%; 
+    left: 0;
+    right: 0;  
+    width: auto; 
+    background: var(--background-color);
+    padding: 40px 60px;
+    z-index: 800;
+    /* Animation et intéraction */
+    pointer-events: none;
+    opacity: 0;
+    transform: translateY(-15px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+/* contenu interne du dropdown */
+.dropdown-content{
+    max-width: 1200px;
+    margin: 0 auto;
+    width: 100%;
+}
+/* En-tete du dropdown */
+.dropdown-header{
+    margin-bottom: 30px;
+    text-align: left;
+}
+.dropdown-header h2 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--text-color);
+    margin: 0;
+}
+.category-item.open .dropdown {
+    pointer-events: auto;
+    opacity: 1;
+    transform: translateY(0);
+}
+/* Apparition du dropdown au survol */
+.category-item:hover .dropdown{
+    pointer-events: auto;
+    max-height: 1000px;
+    opacity: 1;
+    transform: translateY(0);
+}
+.category-item .dropdown {
+    transition: opacity 0.3s ease, transform 0.3s ease, max-height 0.5s ease;
+}
+/* Animation keyframes type navbar */
+@keyframes fadeInDown {
+    from {
+        opacity: 0;
+        transform: translateY(-30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+@keyframes fadeOutDown {
+    from {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    to {
+        opacity: 0;
+        transform: translateY(-30px);
+    }
+}
+/* grille des marques du dropdown */
+.brands-grid{
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 25px;
+    max-width: 1200px;
+    margin: 0 auto;
+    width: 100% ;
+}
+/* carte des marques */
+.brand-card {
+    text-align: center;
+    transition: transform 0.2s ease;
+}
+.brand-card:hover {
+    transform: translateY(-5px);
+}
+/* logo des marques */
+.brand-logo {
+    width: 80px;
+    height: 80px;
+    object-fit: contain;
+    margin-bottom: 10px;
+    transition: transform 0.3s ease;
+}
+/* Lien qui englobe l'image + le nom */
+.brand-link {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-decoration: none; 
+    color: inherit; 
+    transition: transform 0.2s ease, color 0.3s ease;
+}
+.brand-link:hover {
+    transform: translateY(-5px);
+}
+.brand-link:hover .brand-logo {
+    transform: scale(1.05);
+}
+/* nom des marques */
+.brand-name {
+    display: block;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text-color);
+}
+/* Bouton voir tout */
+.view-all {
+    text-align: center;
+    margin-top: 30px;
+}
+.view-all a {
+    position: relative;
+    display: inline-block;
+    background: var(--primary-color);
+    color: var(--text-color);
+    padding: 10px 25px;
+    border-radius: 50px;
+    border: 1px solid var(--secondary-color);
+    text-decoration: none;
+    font-weight: 600;
+    transition: background 0.3s;
+    overflow: hidden;
+    z-index: 1;
+}
+/* Glow animé */
+.view-all a::before {
+    content: "";
+    position: absolute;
+    top: -4px;
+    left: -4px;
+    right: -4px;
+    bottom: -4px;
+    border-radius: 50px;
+    background: conic-gradient(
+        from 0deg,
+        var(--secondary-color),
+        var(--primary-color),
+        var(--secondary-color)
+    );
+    z-index: -1;
+    animation: spin 3s linear infinite;
+    filter: blur(6px);
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+/* Activer le glow au hover */
+.view-all a:hover::before {
+    opacity: 1;
+}
+/* Animation rotation */
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+.view-all a:hover {
+    background: var(--secondary-color);
+    border: 1px solid var(--primary-color);
+    color: var(--text-color);
+}
+/*******   DESIGN DE LA VUE PRODUCT-LIST  ***********/ 
+/* container de la vue */
+.container{
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+/* Titre de la vue */
+.page-title{
+    font-size: 2rem;
+    font-weight: bold;
+    margin-bottom: 25px;
+    text-align: center;
+    color: var(--secondary-color);
+}
+/* Grille des produits */
+.products-grid{
+    display: grid;
+    grid-template-columns: repeat(auto-fill,minmax(250px,1fr));
+    gap: 25px;
+}
+/* Cartes des produits */
+.product-card{
+    background: var(--inverse-text-color);
+    border: 1px solid var(--secondary-color);
+    border-radius: 16px;
+    padding: 16px;
+    text-align: center;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 6px rgba(0,0,0,0,0.5);
+}
+/* Effet de survol sur les cartes */
+.product-card:hover{
+    box-shadow: 0 6px 14px var(--header-color);
+    transform: translate(-4px);
+}
+/* Images produits */
+.product-image{
+    width: 100%;
+    height: 220px;
+    object-fit: cover;
+    border-radius: 12px;
+    margin-bottom: 12px;
+}
+/* Lien des produits*/
+.product-link{
+    text-decoration: none;
+}
+/* Noms des produits */
+.product-name{
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--text-color);
+    display: block;
+    margin-bottom: 6px;
+}
+/* prix des produits */
+.product-price{
+    font-size: 1.1rem;
+    font-weight: normal;
+    color: var(--text-color);
+    margin-bottom: 12px;
+}
+/* Bouton des ajouter au panier */
+.add-to-bag{
+    width:100%;
+    background: var(--primary-color);
+    color: var(--text-color);
+    font-weight: 600px;
+    padding: 10px;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+/* effet de survol du bouton */
+.add-to-bag:hover{
+    background: var(--secondary-color);
+}
+/*******   DESIGN DE LA VUE PRODUCT-DETAIL ***********/ 
+
+.product-detail{
+    display: flex;
+    gap: 2rem;
+    margin: 3rem;
+}
+.gallery-image{
+    display: flex;
+}
+.thumbnails{
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+.thumbnail{
+    width: 60px;
+    height: 60px;
+    object-fit: cover;
+    border: 2px solid var(--secondary-color);
+    cursor: pointer;
+}
+.thumbnail.active,.thumbnail:hover{
+    border-color: var(--primary-color) ;
+}
+.main-image-container{
+    width: 600px;
+    height: 600Px;
+    overflow: hidden;
+    /* border: 1px solid var(--primary-color); */
+}
+.main-image{
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    transition: 0.3ease;
+    cursor: zoom-in;
+}
+.product-info{
+    color: var(--text-color);
+    position: relative;
+    flex: 1;
+}
+.product-info h1{
+    font-size: 30px;
+    margin-bottom: 0.5rem;
+}
+.reviews{
+    color: var(--secondary-color);
+    margin-bottom: 1rem;
+}
+.price{
+    font-size :20px;
+    /* font-weight: bold; */
+    margin-bottom: 1rem;
+}
+/* Conteneur parent du produit → position relative */
+.product-info {
+    position: relative;
+}
+
+/* Bouton favoris en haut à droite */
+.favorite {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+
+    width: 50px;
+    height: 50px;
+
+    background: none;
+    border: none;
+    cursor: pointer;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    transition: transform 0.2s ease, color 0.3s ease;
+}
+
+.favorite i {
+    font-size: 2rem;
+    color: var(--primary-color);
+    transition: color 0.3s ease;
+}
+.favorite:hover {
+    transform: scale(1.2); /* zoom léger */
+}
+.favorite:hover i {
+    color: var(--secondary-color); /* passe au rouge au survol */
+}
+
+.actions{
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    margin-bottom: 2rem;
+}
+.add-to-cart{
+    background-color: var(--primary-color);
+    color: var(--text-color);
+    border: none;
+    padding: 10px 20px;
+    border-radius: 25px;
+    cursor: pointer;
+    width: 20rem;
+}
+.add-to-cart:hover {
+    background-color: var(--secondary-color);
+}
+
+.quantity {
+    color: var(--primary-color);
+    display: flex;
+    align-items: center;
+    border: 1px solid var(--text-color);
+    border-radius: 25px;
+    overflow: hidden;
+}
+.quantity button  {
+    background: none;
+    color: var(--text-color);
+    border: none;
+    padding: 8px 12px;
+    cursor: pointer;
+}
+.quantity span {
+    padding: 0 10px;
+}
+
+.accordion-item {
+    border-top: 1px solid var(--text-color);
+}
+.accordion-item button {
+    color: var(--text-color);
+    width: 100%;
+    padding: 1rem;
+    text-align: left;
+    font-weight: bold;
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+.accordion-content {
+    display: none;
+    padding: 1rem;
+    color: #555;
+}
+.accordion-content.open {
+    display: block;
 }
 
 /* Paramatrage du responsive */

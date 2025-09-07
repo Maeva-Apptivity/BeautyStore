@@ -47,6 +47,9 @@ class BrandSeeder extends Seeder
                         'name'=> $brand,
                         'slug'=> Str::slug($brand),
                         'category_id'=> $category->id,
+                        // Logo unique généré à partir du nom de la marque
+                        'logo' => 'https://ui-avatars.com/api/?name=' . urlencode($brand) 
+                                . '&background=random&color=fff&size=200'
                     ]);
                 }
             }

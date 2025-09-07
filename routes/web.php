@@ -1,26 +1,32 @@
 <?php
 
-
+use App\Http\Controllers\BrandController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\ProductController;
 
     Route::get('/', function () {
-        return view('home');
+        return view('home')->name('homepage');
     });
 
-    // Groupage des routes pour les categories
+    // ROUTE DES CATEGORIES
     Route::controller(CategoryController::class)->group(function(){
+        Route::get('/','index')->name('category.list');
+        Route::get('/category/{slug}','getBrands')->name('getBrands');
+        
+    });
 
-        // Listing des categories (ex : skincare, makeup...)
-        Route::get('/',[CategoryController::class,'index'])->name('category.list');
-        // Listing des marques associées a la category séléctionner petit + (prend le slug au lieu de id)
-        Route::get('/{slug}',[CategoryController::class,'getBrands'])->name('show.brands');
+    // ROUTE DES PRODUITS
+    Route::controller(ProductController::class)->group(function(){
+        Route::get('/products','index')->name('product.list');
+        Route::get('/products/{slug}','show')->name('product.show');
+        
     });
 
     // Route vers la une page définit pour les erreurs
     Route::fallback(function(){
-        return 'this page is no found please try again =(';
+        return 'this page is not found please try again =(';
     });
 
 

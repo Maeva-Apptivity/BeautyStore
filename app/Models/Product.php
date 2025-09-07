@@ -23,7 +23,7 @@ class Product extends Model
     ];
 
     protected $casts =[
-        'images'=> 'array',
+        'gallery_images'=> 'array',
     ];
 
     // un produit appartient une seule catégorie

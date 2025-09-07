@@ -11,25 +11,38 @@ class CategoryController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index ()
     {
-        $categories = Category::all();
-        // return dd('$categories',compact('categories'));
+        // Charge les category avec les marques
+        $categories=Category::with('brands')->get();
         return view('home',compact('categories'));
-    }
 
-    public function getBrands($slug)
+    }
+    public function getBrands ($slug)
     {
-        // Recherche le slug attribuué a la catégorie
-        $category = Category::where('name',$slug)->firstOrFail();
-
+        //récupération des category avec le slug
+        $category = Category::where('slug',$slug)->firstOrfail();
+        //récupération des marque avec l'id de la category
         $brands = Brand::where('category_id', $category->id)->get();
-        return view('components.drop-down-categories',compact('brands', 'category'));
+        //récupération de toutes les categories
+        $categories = Category::all(); 
+    
+        return view('home',compact('categories', 'brands', 'category'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
+    // // public function show($slug)
+    // // {
+    // //     // Recherche le slug attribué a la catégorie
+    // //     $category = Category::where('slug',$slug)->firstOrFail();
+    // //     $brands = Brand::where('category_id', $category->id)->get();
+    // //     $categories = Category::all();
+
+    // //     return view('home', compact('brands', 'category', 'categories'));
+    // // }
+
+    // /**
+    //  * Show the form for creating a new resource.
+    //  */
     public function create()
     {
         //
@@ -46,10 +59,10 @@ class CategoryController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show()
-    {
+    // public function show()
+    // {
         
-    }
+    // }
 
     /**
      * Show the form for editing the specified resource.
