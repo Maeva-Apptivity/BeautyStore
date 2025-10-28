@@ -12,7 +12,7 @@
                     <div class="brands-grid"> 
                         @foreach ($category->brands as $brand)
                             <div class="brand-card">
-                                <a href="#" class="brand-link">
+                                <a href="{{ route('product.by.brand', $brand->slug) }}" class="brand-link">
                                     <img src="{{ $brand->logo }}" alt="{{ $brand->name }} logo" class="brand-logo">
                                     <span class="brand-name">{{ $brand->name }}</span>
                                 </a>

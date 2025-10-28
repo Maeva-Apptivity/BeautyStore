@@ -11,23 +11,11 @@ class CategoryController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index ()
-    {
-        // Charge les category avec les marques
-        $categories=Category::with('brands')->get();
-        return view('home',compact('categories'));
-
-    }
     public function getBrands ($slug)
     {
-        //récupération des category avec le slug
-        $category = Category::where('slug',$slug)->firstOrfail();
-        //récupération des marque avec l'id de la category
-        $brands = Brand::where('category_id', $category->id)->get();
-        //récupération de toutes les categories
-        $categories = Category::all(); 
-    
-        return view('home',compact('categories', 'brands', 'category'));
+        $category = Category::where('slug',$slug)->with('brands')->firstOrFail();
+        $categories = Category::all();
+        return view('home', compact('categories', 'category'));
     }
 
     // // public function show($slug)

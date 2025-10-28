@@ -33,5 +33,6 @@
                 {{ $slot }}
             </main>
         </div>
+        @include('sweetalert2::index')
     </body>
 </html>

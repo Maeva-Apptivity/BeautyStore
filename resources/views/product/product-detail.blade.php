@@ -1,10 +1,11 @@
 @extends('layouts.layouts')
 @section('content')
 
+<link href='https://cdn.boxicons.com/fonts/basic/boxicons.min.css' rel='stylesheet'>
 <div class="product-detail">
     <div class="gallery-image">
 
-        {{-- miniature des images  --}}
+        {{-- GALLERY D'IMAGES  --}}
         <div class="thumbnails">
             <img src="{{$product->image}}" onclick="changeImage('{{$product->image}}')" class="thumbnail active">
 
@@ -20,7 +21,7 @@
     </div>
     
 
-    {{-- Bloc droit avec infos produit --}}
+    {{-- INFOS PRODUITS--}}
     <div class="product-info">
 
         <button class="favorite">
@@ -37,7 +38,17 @@
         <p class="price">{{$product->price}}€</p>
 
         <div class="actions">
-            <button class="add-to-cart">Ajouter au panier</button>
+            @if (Auth::check())
+                <button 
+                    class="add-to-cart-btn" data-id="{{ $product->id }}" "
+                    data-id="{{$product->id}}"
+                    data-name="{{$product->name}}"
+                    data-price="{{$product->price}}"
+                    data-image="{{$product->image}}">
+                    Ajouter à ma routine</button>
+            @else
+                <button class="add-to-cart-btn" data-id="{{ $product->id }}" ">Ajouter à ma routine</button>
+            @endif
 
             <div class="quantity">
                 <button onclick=""> 
@@ -51,25 +62,39 @@
 
         </div>
 
-        {{-- rubrique déployable --}}
+        {{-- RUBRTIQUE DÉPLOYABLE --}}
         <div class="accordion">
 
             <div class="accordion-item">
-                <button onclick="toggleAccordion('product-description')">Description </button>
-                <div class="accordion-content" id="product-description">{{$product->description}}</div>
+                <button class="accordion-button">
+                    Description
+                    <i class='bxr  bx-chevron-down'  ></i> 
+                </button>
+                <div class="accordion-content">
+                    {!! nl2br(e($product->description)) !!}
+                </div>
             </div>
 
             <div class="accordion-item">
-                <button onclick="toggleAccordion('product-composition')">Compostion</button>
-                <div class="accordion-content" id="product-composition">Compo</div>
+                <button class="accordion-button">
+                    Composition
+                    <i class='bxr  bx-chevron-down'  ></i> 
+                </button>
+                <div class="accordion-content">
+                    Compo
+                </div>
             </div>
 
             <div class="accordion-item">
-                <button onclick="toggleAccordion('product-use')">Conseil d'utilisation</button>
-                <div class="accordion-content" id="product-use">Conseils d’utilisation</div>
+                <button class="accordion-button">
+                    Conseil d'utilisation
+                    <i class='bxr  bx-chevron-down'  ></i> 
+                </button>
+                <div class="accordion-content">
+                    Conseils d’utilisation
+                </div>
             </div>
-
-        </div>
     </div>
 </div>
+
 @endsection

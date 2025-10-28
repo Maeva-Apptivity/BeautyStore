@@ -23,30 +23,30 @@ class ProductSeeder extends Seeder
                     'name' => 'Crème Hydratante Éclat',
                     'price' => 32.99,
                     'description' => 'Crème de jour hydratante à l\'acide hyaluronique pour un teint éclatant',
-                    'image' => 'https://source.unsplash.com/400x400/?cream,skincare',
+                    'image' => 'https://picsum.photos/400/400?random=1',
                     'gallery_images' => [
-                        'https://source.unsplash.com/400x400/?cosmetic,cream',
-                        'https://source.unsplash.com/400x400/?face,moisturizer'
+                        'https://picsum.photos/400/400?random=2',
+                        'https://picsum.photos/400/400?random=3'
                     ]
                 ],
                 [
                     'name' => 'Sérum Anti-Âge',
                     'price' => 49.50,
                     'description' => 'Sérum concentré en rétinol et vitamine C pour lutter contre les signes de l\'âge',
-                    'image' => 'https://source.unsplash.com/400x400/?serum,cosmetics',
+                    'image' => 'https://picsum.photos/400/400?random=4',
                     'gallery_images' => [
-                        'https://source.unsplash.com/400x400/?vitamin,skincare',
-                        'https://source.unsplash.com/400x400/?beauty,serum'
+                        'https://picsum.photos/400/400?random=5',
+                        'https://picsum.photos/400/400?random=6'
                     ]
                 ],
                 [
                     'name' => 'Nettoyant Doux',
                     'price' => 18.75,
                     'description' => 'Nettoyant visage doux au pH neutre pour une peau nette sans irritation',
-                    'image' => 'https://source.unsplash.com/400x400/?cleanser,skincare',
+                    'image' => 'https://picsum.photos/400/400?random=7',
                     'gallery_images' => [
-                        'https://source.unsplash.com/400x400/?facewash,beauty',
-                        'https://source.unsplash.com/400x400/?soap,cleanser'
+                        'https://picsum.photos/400/400?random=8',
+                        'https://picsum.photos/400/400?random=9'
                     ]
                 ]
             ],
@@ -57,30 +57,30 @@ class ProductSeeder extends Seeder
                     'name' => 'Fond de Teint Mat',
                     'price' => 35.99,
                     'description' => 'Fond de teint matifiant longue tenue 16h',
-                    'image' => 'https://source.unsplash.com/400x400/?foundation,makeup',
+                    'image' => 'https://picsum.photos/400/400?random=10',
                     'gallery_images' => [
-                        'https://source.unsplash.com/400x400/?makeup,foundation',
-                        'https://source.unsplash.com/400x400/?cosmetics,liquid'
+                        'https://picsum.photos/400/400?random=11',
+                        'https://picsum.photos/400/400?random=12'
                     ]
                 ],
                 [
                     'name' => 'Palette Éclat',
                     'price' => 52.00,
                     'description' => 'Palette de fards à paupières nude et poudrés',
-                    'image' => 'https://source.unsplash.com/400x400/?eyeshadow,palette',
+                    'image' => 'https://picsum.photos/400/400?random=13',
                     'gallery_images' => [
-                        'https://source.unsplash.com/400x400/?palette,makeup',
-                        'https://source.unsplash.com/400x400/?eyeshadow,beauty'
+                        'https://picsum.photos/400/400?random=14',
+                        'https://picsum.photos/400/400?random=15'
                     ]
                 ],
                 [
                     'name' => 'Mascara Volume+',
                     'price' => 26.50,
                     'description' => 'Mascara volume intense waterproof',
-                    'image' => 'https://source.unsplash.com/400x400/?mascara,makeup',
+                    'image' => 'https://picsum.photos/400/400?random=16',
                     'gallery_images' => [
-                        'https://source.unsplash.com/400x400/?eyes,makeup',
-                        'https://source.unsplash.com/400x400/?lashes,cosmetics'
+                        'https://picsum.photos/400/400?random=17',
+                        'https://picsum.photos/400/400?random=18'
                     ]
                 ]
             ],
@@ -91,30 +91,30 @@ class ProductSeeder extends Seeder
                     'name' => 'Shampoing Lissant',
                     'price' => 22.99,
                     'description' => 'Shampoing lissant brésilien à la kératine',
-                    'image' => 'https://source.unsplash.com/400x400/?shampoo,hair',
+                    'image' => 'https://picsum.photos/400/400?random=19',
                     'gallery_images' => [
-                        'https://source.unsplash.com/400x400/?hair,product',
-                        'https://source.unsplash.com/400x400/?shampoo,bottle'
+                        'https://picsum.photos/400/400?random=20',
+                        'https://picsum.photos/400/400?random=21'
                     ]
                 ],
                 [
                     'name' => 'Après-Shampoing Repair',
                     'price' => 24.50,
                     'description' => 'Après-shampoing réparateur pointes fourchues',
-                    'image' => 'https://source.unsplash.com/400x400/?conditioner,haircare',
+                    'image' => 'https://picsum.photos/400/400?random=22',
                     'gallery_images' => [
-                        'https://source.unsplash.com/400x400/?haircare,product',
-                        'https://source.unsplash.com/400x400/?conditioner,bottle'
+                        'https://picsum.photos/400/400?random=23',
+                        'https://picsum.photos/400/400?random=24'
                     ]
                 ],
                 [
                     'name' => 'Huile Capillaire',
                     'price' => 29.99,
                     'description' => 'Huile capillaire multi-usages brillance et nutrition',
-                    'image' => 'https://source.unsplash.com/400x400/?hair,oilmist',
+                    'image' => 'https://picsum.photos/400/400?random=25',
                     'gallery_images' => [
-                        'https://source.unsplash.com/400x400/?hair,oil',
-                        'https://source.unsplash.com/400x400/?serum,hair'
+                        'https://picsum.photos/400/400?random=26',
+                        'https://picsum.photos/400/400?random=27'
                     ]
                 ]
             ],
@@ -125,30 +125,30 @@ class ProductSeeder extends Seeder
                     'name' => 'Eau de Parfum Florale',
                     'price' => 89.99,
                     'description' => 'Eau de parfum florale romantique et persistante',
-                    'image' => 'https://source.unsplash.com/400x400/?perfume,floral',
+                    'image' => 'https://picsum.photos/400/400?random=28',
                     'gallery_images' => [
-                        'https://source.unsplash.com/400x400/?perfume,bottle',
-                        'https://source.unsplash.com/400x400/?fragrance,floral'
+                        'https://picsum.photos/400/400?random=29',
+                        'https://picsum.photos/400/400?random=30'
                     ]
                 ],
                 [
                     'name' => 'Body Mist Fraîcheur',
                     'price' => 32.50,
                     'description' => 'Body mist fraîcheur quotidienne légère',
-                    'image' => 'https://source.unsplash.com/400x400/?bodymist,fragrance',
+                    'image' => 'https://picsum.photos/400/400?random=31',
                     'gallery_images' => [
-                        'https://source.unsplash.com/400x400/?spray,cosmetics',
-                        'https://source.unsplash.com/400x400/?mist,beauty'
+                        'https://picsum.photos/400/400?random=32',
+                        'https://picsum.photos/400/400?random=33'
                     ]
                 ],
                 [
                     'name' => 'Lotion Corporelle',
                     'price' => 28.99,
                     'description' => 'Lotion corporelle parfumée hydratante 24h',
-                    'image' => 'https://source.unsplash.com/400x400/?bodylotion,beauty',
+                    'image' => 'https://picsum.photos/400/400?random=34',
                     'gallery_images' => [
-                        'https://source.unsplash.com/400x400/?lotion,cosmetics',
-                        'https://source.unsplash.com/400x400/?cream,bodycare'
+                        'https://picsum.photos/400/400?random=35',
+                        'https://picsum.photos/400/400?random=36'
                     ]
                 ]
             ],
@@ -159,34 +159,35 @@ class ProductSeeder extends Seeder
                     'name' => 'Déodorant Naturel',
                     'price' => 16.99,
                     'description' => 'Déodorant naturel sans aluminium 48h protection',
-                    'image' => 'https://source.unsplash.com/400x400/?deodorant,eco',
+                    'image' => 'https://picsum.photos/400/400?random=37',
                     'gallery_images' => [
-                        'https://source.unsplash.com/400x400/?natural,care',
-                        'https://source.unsplash.com/400x400/?eco,cosmetics'
+                        'https://picsum.photos/400/400?random=38',
+                        'https://picsum.photos/400/400?random=39'
                     ]
                 ],
                 [
                     'name' => 'Crème Visage Bio',
                     'price' => 29.50,
                     'description' => 'Crème visage bio certifiée vegan et cruelty-free',
-                    'image' => 'https://source.unsplash.com/400x400/?organic,skincare',
+                    'image' => 'https://picsum.photos/400/400?random=40',
                     'gallery_images' => [
-                        'https://source.unsplash.com/400x400/?bio,cream',
-                        'https://source.unsplash.com/400x400/?eco,skincare'
+                        'https://picsum.photos/400/400?random=41',
+                        'https://picsum.photos/400/400?random=42'
                     ]
                 ],
                 [
                     'name' => 'Gommage Écologique',
                     'price' => 24.99,
                     'description' => 'Gommage écologique aux coques de noix recyclées',
-                    'image' => 'https://source.unsplash.com/400x400/?scrub,eco',
+                    'image' => 'https://picsum.photos/400/400?random=43',
                     'gallery_images' => [
-                        'https://source.unsplash.com/400x400/?gommage,skincare',
-                        'https://source.unsplash.com/400x400/?eco,beauty'
+                        'https://picsum.photos/400/400?random=44',
+                        'https://picsum.photos/400/400?random=45'
                     ]
                 ]
             ],
         ];
+
         foreach ($productsData as $brandName => $products) {
             $brand = Brand::where('name', $brandName)->first();
             

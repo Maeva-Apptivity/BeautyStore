@@ -17,7 +17,7 @@ class Brand extends Model
         'category_id',
         'name',
         'slug',
-        'image',
+        'logo',
     ];
 
     // Création de ma fonction pour générer automatiquement le slug a chaque création et modification
@@ -35,7 +35,7 @@ class Brand extends Model
     }
 
     // une marque a une seule catégorie 
-    public function categories(): BelongsTo
+    public function category(): BelongsTo
     {
         return $this->belongsTo(Category::class);
     }
