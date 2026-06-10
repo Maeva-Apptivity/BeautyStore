@@ -14,7 +14,7 @@ class ProductController extends Controller
     public function index()
     {
         // récupère les produits par ordre décroissant du plus récent au plus ancien
-        $products = Product::with(['brand', 'category'])->orderBy('created_at', 'desc')->paginate(10);
+        $products = Product::with(['brand', 'category'])->orderBy('created_at', 'desc')->paginate(12);
         return view('product.products-list',compact('products'));
     }
 
@@ -29,7 +29,7 @@ class ProductController extends Controller
     {
         $brand = Brand::where('slug',$slug)->firstOrFail();
         
-        $products = $brand->products()->with(['brand', 'category'])->orderBy('created_at','desc')->paginate(10);
+        $products = $brand->products()->with(['brand', 'category'])->orderBy('created_at','desc')->paginate(12);
         return view('product.products-list',compact('products','brand'));
     }
 

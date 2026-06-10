@@ -9,7 +9,7 @@
             'subtitle' => 'Teint, lèvres et palettes pour sublimer chaque look',
         ],
         'HairCare' => [
-            'image' => 'https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&w=900&q=80',
+            'image' => 'https://images.unsplash.com/photo-1527799820374-dcf8d9d4a388?auto=format&fit=crop&w=900&q=80',
             'subtitle' => 'Rituels cheveux doux, brillants et nourris',
         ],
         'Fragrance' => [
