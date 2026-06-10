@@ -93,6 +93,68 @@ class CartController extends Controller
         ]);
     }
 
+    public function addFromDetail(Request $request)
+{
+    $request->validate([
+        'product_id' => 'required|exists:products,id',
+        'quantity' => 'required|integer|min:1'
+    ]);
+
+    $product = Product::findOrFail($request->product_id);
+    $qty = $request->quantity;
+
+    if (auth()->check()) {
+
+        $user = auth()->user();
+
+        $cartItem = Cart::where('user_id', $user->id)
+            ->where('product_id', $product->id)
+            ->first();
+
+        if ($cartItem) {
+            $cartItem->quantity += $qty;
+            $cartItem->save();
+        } else {
+            Cart::create([
+                'user_id' => $user->id,
+                'product_id' => $product->id,
+                'quantity' => $qty
+            ]);
+        }
+
+        $cartCount = Cart::where('user_id', $user->id)->sum('quantity');
+    } else {
+
+        $cart = session()->get('cart', []);
+
+        if (isset($cart[$product->id])) {
+            $cart[$product->id]['quantity'] += $qty;
+        } else {
+            $cart[$product->id] = [
+                'name' => $product->name,
+                'price' => $product->price,
+                'image' => $product->image,
+                'quantity' => $qty
+            ];
+        }
+
+        session()->put('cart', $cart);
+
+        $cartCount = collect($cart)->sum('quantity');
+    }
+
+    // 🔥 RÉPONSE AJAX
+    return response()->json([
+        'success' => true,
+        'name' => $product->name,
+        'price' => $product->price,
+        'image' => $product->image,
+        'quantity_added' => $qty,
+        'cartCount' => $cartCount,
+    ]);
+}
+
+
     public function getCartCount(){
         
         if(auth()->check()){
@@ -104,4 +166,72 @@ class CartController extends Controller
         }
         return response()->json(['count' => $itemsCount]);
     }
+
+    // fonction pour augmenter la quantité
+    public function increaseQuantity ($id){
+        if (auth()->check()) {
+            $cartItem = Cart::find($id);
+
+            if($cartItem){
+                $cartItem->quantity += 1;
+                $cartItem->save();
+            }
+        } else {
+
+            $cart = session()->get('cart',[]);
+            if (isset($cart[$id])){
+                $cart[$id]['quantity']+= 1;
+                session()->put('cart',$cart);
+            }
+        }
+    return redirect()->back();
+    }
+
+    // fonction pour diminuer la quantité des articles
+    public function decreaseQuantity ($id){
+        
+        if (auth()->check()) {
+        $cartItem = Cart::find($id);
+
+        if ($cartItem) {
+            if ($cartItem->quantity > 1) {
+                $cartItem->quantity -= 1;
+                $cartItem->save();
+            } else {
+                $cartItem->delete();
+            }
+        }
+    } else {
+        $cart = session()->get('cart', []);
+        if (isset($cart[$id])) {
+            if ($cart[$id]['quantity'] > 1) {
+                $cart[$id]['quantity'] -= 1;
+            } else {
+                unset($cart[$id]);
+            }
+            session()->put('cart', $cart);
+        }
+    }
+    return redirect()->back();
+}
+
+    // fonction pour supprimer un articles
+    public function removeItem($id) {
+
+        if(auth()->check()) {
+        $cartItem = \App\Models\Cart::find($id);
+        if($cartItem) {
+            $cartItem->delete();
+        }
+    } else {
+        $cart = session()->get('cart', []);
+        if(isset($cart[$id])) {
+            unset($cart[$id]);
+            session()->put('cart', $cart);
+        }
+    }
+        return redirect()->back()->with('success', 'Article supprimé du panier avec succès !');
+    }
+
+
 }

@@ -29,11 +29,13 @@ use App\Http\Controllers\GoogleAuthController;
     Route::controller(CartController::class)->group(function(){
         Route::get('/cart','index')->name('cart.list');
         Route::get('/cart/count','getCartCount')->name('cart.count');//mise a jour de mon indicateur de quantité
+        Route::delete('/cart/remove/{id}','removeItem')->name('cart.item.remove');
+        Route::put('/cart/increase/{id}','increaseQuantity')->name('cart.quantity.increase');
+        Route::put('/cart/decrease/{id}','decreaseQuantity')->name('cart.quantity.decrease');
 
         // Route du panier avec ajax
         Route::post('/cart/add/ajax','addAjax')->name('cart.addAjax');
-        Route::post('/cart/update/ajax','updateAjax')->name('cart.updateAjax');
-        Route::delete('/cart/delete/ajax', 'deleteAjax')->name('cart.deleteAjax');
+        Route::post('/cart/add/detail','addFromDetail')->name('cart.add.fromDetail');
     });
 
 

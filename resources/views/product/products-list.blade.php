@@ -9,14 +9,15 @@
             @foreach ($products as $product)
                 <div class="product-card">
                     <a href="{{ route('product.show', $product->slug) }}" class="product-link">
-                        <img src="{{ $product->image }}" alt="{{ $product->name }}" class="product-image">
+                        <img src="{{ $product->image }}" alt="{{ $product->name }}" class="product-image" width="260" height="220" loading="lazy" decoding="async">
                         <h2 class="product-name">{{ $product->name }}</h2>
                         <p class="product-price">{{ $product->price }}€</p>
                     </a>
 
                     {{-- Bouton universel (connecté ou invité) --}}
                     <button
-                        class="add-to-cart-btn" data-id="{{ $product->id }}" "
+                        type="button"
+                        class="add-to-cart-btn"
                         data-id="{{ $product->id }}"
                         data-name="{{ $product->name }}"
                         data-price="{{ $product->price }}"
@@ -31,5 +32,5 @@
             </div>
         @endif
     </div>
+</div>
 @endsection
-

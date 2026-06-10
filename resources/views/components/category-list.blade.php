@@ -13,7 +13,7 @@
                         @foreach ($category->brands as $brand)
                             <div class="brand-card">
                                 <a href="{{ route('product.by.brand', $brand->slug) }}" class="brand-link">
-                                    <img src="{{ $brand->logo }}" alt="{{ $brand->name }} logo" class="brand-logo">
+                                    <img src="{{ $brand->logo }}" alt="Logo {{ $brand->name }}" class="brand-logo" width="80" height="80" loading="lazy" decoding="async">
                                     <span class="brand-name">{{ $brand->name }}</span>
                                 </a>
                             </div>
@@ -27,4 +27,4 @@
         </li>
     @endforeach
 </ul>
-<script src="dropdown.js"></script>
+<script src="{{ asset('dropdown.js') }}" defer></script>
