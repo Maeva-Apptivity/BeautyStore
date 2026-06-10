@@ -5,7 +5,10 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Schema;
 use Laravel\Socialite\Facades\Socialite;
+use Laravel\Socialite\Two\InvalidStateException;
 
 class GoogleAuthController extends Controller
 {
@@ -17,10 +20,15 @@ class GoogleAuthController extends Controller
     public function callback()
     {
         try {
-            $googleUser = Socialite::driver('google')->user();
+            try {
+                $googleUser = Socialite::driver('google')->user();
+            } catch (InvalidStateException $e) {
+                $googleUser = Socialite::driver('google')->stateless()->user();
+            }
 
             // Recherche d'un utilisateur existant
             $user = User::where('email', $googleUser->getEmail())->first();
+            $avatar = $this->avatarColumnExists() ? $googleUser->getAvatar() : null;
 
             $isNewUser = false;
 
@@ -34,19 +42,18 @@ class GoogleAuthController extends Controller
                     'last_name'  => $parts[1] ?? '',
                     'email'      => $googleUser->getEmail(),
                     'google_id'  => $googleUser->getId(),
-                    'avatar'     => $googleUser->getAvatar(),
                     'password'   => bcrypt(Str::random(16)),
-                ]);
+                ] + ($avatar ? ['avatar' => $avatar] : []));
                 
                 $isNewUser = true;
             } elseif (!$user->google_id) {
                 // Si l'utilisateur existe déjà mais sans google_id, on met à jour
-                $user->update([
+                $user->update(array_filter([
                     'google_id' => $googleUser->getId(),
-                    'avatar' => $googleUser->getAvatar(),
-                ]);
-            } elseif (!$user->avatar && $googleUser->getAvatar()) {
-                $user->update(['avatar' => $googleUser->getAvatar()]);
+                    'avatar' => $avatar,
+                ]));
+            } elseif ($avatar && !$user->avatar) {
+                $user->update(['avatar' => $avatar]);
             }
 
             // Connexion
@@ -57,12 +64,22 @@ class GoogleAuthController extends Controller
                 ? 'Compte créé et connecté avec succès !' 
                 : 'Connexion réussie !';
 
-            return redirect()->intended('/')->with('success', $message);
+            return redirect()->route('homepage')->with('success', $message);
 
         } catch (\Exception $e) {
+            Log::error('Erreur lors de la connexion avec Google', [
+                'message' => $e->getMessage(),
+                'exception' => get_class($e),
+            ]);
+
             return redirect()->route('login')->withErrors([
                 'google' => 'Erreur lors de la connexion avec Google',
             ])->with('error', 'Erreur lors de la connexion avec Google');
         }
+    }
+
+    private function avatarColumnExists(): bool
+    {
+        return Schema::hasColumn('users', 'avatar');
     }
 }

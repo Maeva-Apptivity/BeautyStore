@@ -1,10 +1,8 @@
 <?php
 
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\HomeController;
-use Laravel\Socialite\Facades\Socialite;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\CategoryController;
@@ -38,12 +36,6 @@ use App\Http\Controllers\GoogleAuthController;
         Route::post('/cart/add/detail','addFromDetail')->name('cart.add.fromDetail');
     });
 
-
-    // Route vers la une page définit pour les erreurs
-    Route::fallback(function(){
-        return response()->view('errors.404', [], 404);
-    });
-
     Route::get('/dashboard', function () {
         return view('dashboard');
     })->middleware(['auth', 'verified'])->name('dashboard');
@@ -62,3 +54,8 @@ use App\Http\Controllers\GoogleAuthController;
 
 
 require __DIR__.'/auth.php';
+
+// Route vers la une page définit pour les erreurs
+Route::fallback(function(){
+    return response()->view('errors.404', [], 404);
+});
