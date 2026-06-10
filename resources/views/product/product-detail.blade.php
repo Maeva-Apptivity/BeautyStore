@@ -1,33 +1,51 @@
 @extends('layouts.layouts')
 @section('content')
+@php
+    $productImage = $product->displayImage();
+    $galleryImages = $product->displayGalleryImages();
+    $inWishlist = auth()->check()
+        ? \App\Models\Wishlist::where('user_id', auth()->id())->where('product_id', $product->id)->exists()
+        : isset(session()->get('wishlist', [])[$product->id]);
+@endphp
 
 <div class="product-detail">
     <div class="gallery-image">
 
-        {{-- miniature des images  --}}
+        {{-- GALLERY D'IMAGES  --}}
         <div class="thumbnails">
-            <img src="{{$product->image}}" onclick="changeImage('{{$product->image}}')" class="thumbnail active">
+            <img src="{{ $productImage }}" alt="{{ $product->name }}" onclick="changeImage('{{ $productImage }}')" class="thumbnail active" width="80" height="80">
 
-            @foreach ($product->gallery_images ?? [] as $img)
-                <img src="{{$img}}" alt="" onclick="changeImage('{{$img}}')" class='thumbnail'>
+            @foreach ($galleryImages as $img)
+                <img src="{{ $img }}" alt="{{ $product->name }}" onclick="changeImage('{{ $img }}')" class="thumbnail" width="80" height="80" loading="lazy" decoding="async">
             @endforeach
         </div>
 
         <div class="main-image-container">
             {{-- lorsque le curseur survol l'image principal un zoom ce crée --}}
-            <img id='mainImage'src="{{$product->image}}" class="main-image" onmousemove="zoom(event)" onmouseleave="resetZoom()">
+            <img id="mainImage" src="{{ $productImage }}" alt="{{ $product->name }}" class="main-image" onmousemove="zoom(event)" onmouseleave="resetZoom()" width="600" height="600" fetchpriority="high">
         </div>
     </div>
     
 
-    {{-- Bloc droit avec infos produit --}}
+    {{-- INFOS PRODUITS--}}
     <div class="product-info">
 
-        <button class="favorite">
-            <i class='bxr  bx-heart'></i> 
+        <button
+            class="favorite wishlist-toggle-btn {{ $inWishlist ? 'active' : '' }}"
+            type="button"
+            data-id="{{ $product->id }}"
+            aria-label="{{ $inWishlist ? 'Retirer des favoris' : 'Ajouter aux favoris' }}"
+        >
+            <i class="{{ $inWishlist ? 'bx bxs-heart' : 'bx bx-heart' }}"></i>
         </button>
 
         <h1>{{$product->name}}</h1>
+        <p class="product-detail-meta">
+            {{ $product->brand->name ?? 'BeautyStore' }}
+            @if($product->category)
+                <span>{{ $product->category->name }}</span>
+            @endif
+        </p>
         
         {{-- a mettre en fonctionnel --}}
         <div class="reviews">
@@ -37,39 +55,109 @@
         <p class="price">{{$product->price}}€</p>
 
         <div class="actions">
-            <button class="add-to-cart">Ajouter au panier</button>
-
             <div class="quantity">
-                <button onclick=""> 
-                    <i class='bxr  bx-minus'  ></i> 
-                </button>
+                <button type="button" onclick="changeQty(-1)"><i class="bx bx-minus"></i></button>
+
                 <span id="qty">1</span>
-                <button onclick=""> 
-                    <i class='bxr  bx-plus'  ></i> 
-                </button>
+                <input type="hidden" id="qtyInput" value="1">
+
+                <button type="button" onclick="changeQty(1)"><i class="bx bx-plus"></i></button>
             </div>
 
+            <button
+                type="button"
+                class="add-to-cart-btn"
+                data-id="{{ $product->id }}"
+                data-name="{{ $product->name }}"
+                data-price="{{ $product->price }}"
+                data-image="{{ $productImage }}">
+                Ajouter à ma routine
+            </button>
         </div>
+        
 
-        {{-- rubrique déployable --}}
+        {{-- RUBRTIQUE DÉPLOYABLE --}}
         <div class="accordion">
 
             <div class="accordion-item">
-                <button onclick="toggleAccordion('product-description')">Description </button>
-                <div class="accordion-content" id="product-description">{{$product->description}}</div>
+                <button class="accordion-button" type="button">
+                    Description
+                    <i class='bx bx-chevron-down'  ></i> 
+                </button>
+                <div class="accordion-content">
+                    {!! nl2br(e($product->description)) !!}
+                </div>
             </div>
 
             <div class="accordion-item">
-                <button onclick="toggleAccordion('product-composition')">Compostion</button>
-                <div class="accordion-content" id="product-composition">Compo</div>
+                <button class="accordion-button" type="button">
+                    Composition
+                    <i class='bx bx-chevron-down'  ></i> 
+                </button>
+                <div class="accordion-content">
+                    Compo
+                </div>
             </div>
 
             <div class="accordion-item">
-                <button onclick="toggleAccordion('product-use')">Conseil d'utilisation</button>
-                <div class="accordion-content" id="product-use">Conseils d’utilisation</div>
+                <button class="accordion-button" type="button">
+                    Conseil d'utilisation
+                    <i class='bx bx-chevron-down'  ></i> 
+                </button>
+                <div class="accordion-content">
+                    Conseils d’utilisation
+                </div>
             </div>
-
         </div>
     </div>
 </div>
+
+<script>
+function changeImage(src) {
+    const mainImage = document.getElementById("mainImage");
+    if (!mainImage) return;
+
+    mainImage.src = src;
+    document.querySelectorAll(".thumbnail").forEach((thumbnail) => {
+        thumbnail.classList.toggle("active", thumbnail.src === new URL(src, window.location.origin).href);
+    });
+}
+
+function changeQty(value) {
+    let qty = document.getElementById("qty");
+    let qtyInput = document.getElementById("qtyInput");
+    let number = parseInt(qty.textContent);
+
+    number += value;
+    if (number < 1) number = 1;
+
+    qty.textContent = number;
+    qtyInput.value = number;
+}
+
+function zoom(event) {
+    const image = event.currentTarget;
+    const rect = image.getBoundingClientRect();
+    const x = ((event.clientX - rect.left) / rect.width) * 100;
+    const y = ((event.clientY - rect.top) / rect.height) * 100;
+
+    image.style.transformOrigin = `${x}% ${y}%`;
+    image.style.transform = "scale(1.45)";
+}
+
+function resetZoom() {
+    const image = document.getElementById("mainImage");
+    if (!image) return;
+
+    image.style.transformOrigin = "center";
+    image.style.transform = "scale(1)";
+}
+
+document.querySelectorAll(".accordion-button").forEach((button) => {
+    button.addEventListener("click", () => {
+        button.nextElementSibling?.classList.toggle("open");
+    });
+});
+</script>
+
 @endsection

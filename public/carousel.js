@@ -1,44 +1,48 @@
 
-let list = document.querySelector('.slider .list');
-let items = document.querySelectorAll('.slider .list .item');
-let dots = document.querySelectorAll('.slider .dots li');
-let prev = document.getElementById('prev');
-let next = document.getElementById('next');
+document.addEventListener('DOMContentLoaded', () => {
+    const slider = document.querySelector('.slider');
+    const list = document.querySelector('.slider .list');
+    const items = document.querySelectorAll('.slider .list .item');
+    const dots = document.querySelectorAll('.slider .dots li');
+    const prev = document.getElementById('prev');
+    const next = document.getElementById('next');
 
-let active = 0;
-let lengthItems = items.length - 1;
+    if (!slider || !list || !items.length || !prev || !next) return;
 
-next.onclick = function (){
-    if (active + 1 > lengthItems){
-        active = 0;
-    }else {
-        active = active +1;
-    }
-    reloadSlider();
-}
-prev.onclick = function (){
-    if (active - 1 > lengthItems){
-        active = lengthItems;
-    }else {
-        active = active -1;
-    }
-    reloadSlider();
-}
-let refreshSlider = setInterval(()=>{next.click()},5000) //permet de faire le slide automatique de 5secondes
+    let active = 0;
+    let refreshSlider = null;
+    const lastIndex = items.length - 1;
 
-function reloadSlider(){
-    let checkLeft = items[active].offsetLeft;
-    list.style.left = -checkLeft + 'px';
+    const setActiveSlide = (index) => {
+        active = index < 0 ? lastIndex : index > lastIndex ? 0 : index;
+        list.style.transform = `translateX(-${items[active].offsetLeft}px)`;
 
-    let lastActiveDot = document.querySelector('.slider .dots li.active');
-    lastActiveDot.classList.remove('active');
-    dots[active].classList.add('active');
-    clearInterval(refreshSlider) //stop le slide automatique
-    refreshSlider = setInterval(()=>{next.click()},3000); //le slide automatique reprend apres 3 secondes sans intéraction sur le bouton next
-}
-dots.forEach((li, key)=> {
-    li.addEventListener('click', function(){
-        active = key;
-        reloadSlider();
-    })
-})
+        document.querySelector('.slider .dots li.active')?.classList.remove('active');
+        dots[active]?.classList.add('active');
+    };
+
+    const restartAutoplay = () => {
+        window.clearInterval(refreshSlider);
+        refreshSlider = window.setInterval(() => setActiveSlide(active + 1), 5000);
+    };
+
+    next.addEventListener('click', () => {
+        setActiveSlide(active + 1);
+        restartAutoplay();
+    });
+
+    prev.addEventListener('click', () => {
+        setActiveSlide(active - 1);
+        restartAutoplay();
+    });
+
+    dots.forEach((li, key) => {
+        li.addEventListener('click', () => {
+            setActiveSlide(key);
+            restartAutoplay();
+        });
+    });
+
+    window.addEventListener('resize', () => setActiveSlide(active));
+    restartAutoplay();
+});

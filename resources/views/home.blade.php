@@ -4,6 +4,6 @@
 
     <x-category-list :categories="$categories" />
     <x-carousel/>
-    <x-bestSellers/>
+    <x-bestSellers :products="$bestSellers"/>
     
 @endsection
