@@ -20,7 +20,7 @@
         @csrf
 
         <div class="auth-field">
-            <x-input-label for="email" :value="__('Email')" class="auth-label" />
+            <x-input-label for="email" :value="__('E-mail')" class="auth-label" />
             <x-text-input id="email" class="auth-input" type="email" name="email" :value="old('email')" required autofocus autocomplete="username" placeholder="votre@email.com" />
             <x-input-error :messages="$errors->get('email')" class="auth-error" />
         </div>

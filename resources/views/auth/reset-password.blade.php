@@ -11,7 +11,7 @@
         <input type="hidden" name="token" value="{{ $request->route('token') }}">
 
         <div class="auth-field">
-            <x-input-label for="email" :value="__('Email')" class="auth-label" />
+            <x-input-label for="email" :value="__('E-mail')" class="auth-label" />
             <x-text-input id="email" class="auth-input" type="email" name="email" :value="old('email', $request->email)" required autofocus autocomplete="username" />
             <x-input-error :messages="$errors->get('email')" class="auth-error" />
         </div>

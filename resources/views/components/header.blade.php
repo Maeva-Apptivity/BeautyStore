@@ -9,13 +9,13 @@
         </label>
 
         <nav class="navbar">
-        <a href="{{ route('homepage') }}" style="--i:0;">Home</a>
-        <a href="" style="--i:1;">Search</a>
+        <a href="{{ route('homepage') }}" style="--i:0;">Accueil</a>
+        <a href="" style="--i:1;">Recherche</a>
         <a href="" style="--i:2;">Favoris</a>
         
 
         <a href="{{ route('cart.list') }}" style="--i:3;" class="cart-icon-link" aria-label="Voir le panier">
-            <img src="{{ asset('assets/shopping-bag.png') }}" alt="" class="nav-icon" width="40" height="40">
+            <img src="{{ asset('assets/shopping-bag.png') }}" alt="" class="nav-icon cart-bag-icon" width="40" height="40">
             <span class="cart-count" id="cartCount">
                 {{ auth()->check() ? \App\Models\Cart::where('user_id', auth()->id())->sum('quantity') : 0 }}
             </span>

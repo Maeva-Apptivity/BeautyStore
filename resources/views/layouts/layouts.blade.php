@@ -58,7 +58,8 @@
             </div>
         </div>
         <div class="footer-bottom">
-            &copy; {{ date('Y') }} BeautyStore &mdash; Tous droits réservés
+            <span>&copy; {{ date('Y') }} BeautyStore &mdash; Tous droits réservés</span>
+            <span>Produit par Maeva chez Studio Apptivity</span>
         </div>
     </footer>
 </body>

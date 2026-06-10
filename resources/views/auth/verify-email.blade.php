@@ -1,13 +1,13 @@
 <x-guest-layout>
     <div class="auth-card-header">
         <p class="auth-eyebrow">Dernière étape</p>
-        <h1>Vérifiez votre email</h1>
+        <h1>Vérifiez votre e-mail</h1>
         <p>Nous venons de vous envoyer un lien de vérification. Cliquez dessus pour activer votre compte.</p>
     </div>
 
     @if (session('status') == 'verification-link-sent')
         <div class="auth-status">
-            {{ __('Un nouveau lien de vérification a été envoyé à votre adresse email.') }}
+            {{ __('Un nouveau lien de vérification a été envoyé à votre adresse e-mail.') }}
         </div>
     @endif
 

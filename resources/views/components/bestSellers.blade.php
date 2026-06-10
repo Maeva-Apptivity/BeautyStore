@@ -5,7 +5,7 @@
     <div class="container best-sellers-container">
         <div class="best-sellers-heading">
             <span class="best-sellers-eyebrow">Sélection du moment</span>
-            <h2 class="best-sellers-title" id="best-sellers-title">Best Sellers</h2>
+            <h2 class="best-sellers-title" id="best-sellers-title">Meilleures ventes</h2>
             <a href="{{ route('product.list') }}" class="best-sellers-link">Voir tout</a>
         </div>
 
