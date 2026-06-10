@@ -3,6 +3,9 @@
 @php
     $productImage = $product->displayImage();
     $galleryImages = $product->displayGalleryImages();
+    $inWishlist = auth()->check()
+        ? \App\Models\Wishlist::where('user_id', auth()->id())->where('product_id', $product->id)->exists()
+        : isset(session()->get('wishlist', [])[$product->id]);
 @endphp
 
 <div class="product-detail">
@@ -27,8 +30,13 @@
     {{-- INFOS PRODUITS--}}
     <div class="product-info">
 
-        <button class="favorite" type="button" aria-label="Ajouter aux favoris">
-            <i class='bx bx-heart'></i>
+        <button
+            class="favorite wishlist-toggle-btn {{ $inWishlist ? 'active' : '' }}"
+            type="button"
+            data-id="{{ $product->id }}"
+            aria-label="{{ $inWishlist ? 'Retirer des favoris' : 'Ajouter aux favoris' }}"
+        >
+            <i class="{{ $inWishlist ? 'bx bxs-heart' : 'bx bx-heart' }}"></i>
         </button>
 
         <h1>{{$product->name}}</h1>

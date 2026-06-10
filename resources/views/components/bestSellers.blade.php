@@ -1,5 +1,11 @@
 @props(['products' => collect()])
 
+@php
+    $wishlistIds = auth()->check()
+        ? \App\Models\Wishlist::where('user_id', auth()->id())->pluck('product_id')->toArray()
+        : array_keys(session()->get('wishlist', []));
+@endphp
+
 {{-- Section best sellers avec les produits les plus vendus --}}
 <section class="best-sellers-section" aria-labelledby="best-sellers-title">
     <div class="container best-sellers-container">
@@ -14,6 +20,15 @@
                 @foreach ($products as $product)
                     @php($productImage = $product->displayImage())
                     <article class="product-card best-seller-card">
+                        <button
+                            type="button"
+                            class="wishlist-toggle-btn {{ in_array($product->id, $wishlistIds) ? 'active' : '' }}"
+                            data-id="{{ $product->id }}"
+                            aria-label="Ajouter aux favoris"
+                        >
+                            <i class="{{ in_array($product->id, $wishlistIds) ? 'bx bxs-heart' : 'bx bx-heart' }}"></i>
+                        </button>
+
                         <a href="{{ route('product.show', $product->slug) }}" class="product-link">
                             <div class="product-image-wrapper best-seller-image-wrapper">
                                 <span class="best-seller-badge">Top {{ $loop->iteration }}</span>

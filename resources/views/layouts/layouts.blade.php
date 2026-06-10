@@ -7,6 +7,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="route-cart-add" content="{{ route('cart.addAjax') }}">
     <meta name="route-cart-add-detail" content="{{ route('cart.add.fromDetail') }}">
+    <meta name="route-wishlist-toggle" content="{{ route('wishlist.toggle') }}">
     <title>BeautyStore</title>
     <link rel="stylesheet" href="{{ asset('style.css') }}">
     @include('sweetalert2::index')

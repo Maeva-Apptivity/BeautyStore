@@ -2,13 +2,34 @@
 
 @section('content')
 <div class="container">
-    <h1 class="page-title">{{ $brand->name ?? 'Tous nos produits' }}</h1>
+    <h1 class="page-title">
+        @if(!empty($search))
+            Résultats pour « {{ $search }} »
+        @else
+            {{ $brand->name ?? 'Tous nos produits' }}
+        @endif
+    </h1>
+
+    @php
+        $wishlistIds = auth()->check()
+            ? \App\Models\Wishlist::where('user_id', auth()->id())->pluck('product_id')->toArray()
+            : array_keys(session()->get('wishlist', []));
+    @endphp
 
     <div class="products-grid">
         @if ($products->count() > 0)
             @foreach ($products as $product)
                 @php($productImage = $product->displayImage())
                 <div class="product-card">
+                    <button
+                        type="button"
+                        class="wishlist-toggle-btn {{ in_array($product->id, $wishlistIds) ? 'active' : '' }}"
+                        data-id="{{ $product->id }}"
+                        aria-label="Ajouter aux favoris"
+                    >
+                        <i class="{{ in_array($product->id, $wishlistIds) ? 'bx bxs-heart' : 'bx bx-heart' }}"></i>
+                    </button>
+
                     <a href="{{ route('product.show', $product->slug) }}" class="product-link">
                         <div class="product-image-wrapper">
                             <img src="{{ $productImage }}" alt="{{ $product->name }}" class="product-image" width="260" height="260" loading="lazy" decoding="async">
@@ -18,7 +39,6 @@
                         <p class="product-price">{{ $product->price }}€</p>
                     </a>
 
-                    {{-- Bouton universel (connecté ou invité) --}}
                     <button
                         type="button"
                         class="add-to-cart-btn"

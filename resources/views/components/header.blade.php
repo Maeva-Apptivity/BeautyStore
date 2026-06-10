@@ -9,18 +9,29 @@
         </label>
 
         <nav class="navbar">
-        <a href="{{ route('homepage') }}" style="--i:0;">Accueil</a>
-        <a href="" style="--i:1;">Recherche</a>
-        <a href="" style="--i:2;">Favoris</a>
-        
+            <a href="{{ route('homepage') }}" style="--i:0;">Accueil</a>
 
-        <a href="{{ route('cart.list') }}" style="--i:3;" class="cart-icon-link" aria-label="Voir le panier">
-            <img src="{{ asset('assets/shopping-bag.png') }}" alt="" class="nav-icon cart-bag-icon" width="40" height="40">
-            <span class="cart-count" id="cartCount">
-                {{ auth()->check() ? \App\Models\Cart::where('user_id', auth()->id())->sum('quantity') : 0 }}
-            </span>
+            <button class="nav-search-btn" id="searchToggle" style="--i:1;" aria-label="Rechercher" type="button">
+                <i class='bx bx-search'></i>
+            </button>
 
-        </a>
+            <a href="{{ route('wishlist.index') }}" style="--i:2;" class="wishlist-icon-link" aria-label="Mes favoris">
+                <i class='bx bx-heart'></i>
+                <span class="wishlist-count" id="wishlistCount">
+                    @auth
+                        {{ \App\Models\Wishlist::where('user_id', auth()->id())->count() }}
+                    @else
+                        {{ count(session()->get('wishlist', [])) }}
+                    @endauth
+                </span>
+            </a>
+
+            <a href="{{ route('cart.list') }}" style="--i:3;" class="cart-icon-link" aria-label="Voir le panier">
+                <img src="{{ asset('assets/shopping-bag.png') }}" alt="" class="nav-icon cart-bag-icon" width="40" height="40">
+                <span class="cart-count" id="cartCount">
+                    {{ auth()->check() ? \App\Models\Cart::where('user_id', auth()->id())->sum('quantity') : 0 }}
+                </span>
+            </a>
 
             @auth
                 @php
@@ -42,7 +53,6 @@
                     }
                 @endphp
 
-                {{-- Si l'utilisateur est connecté lien vers le dashboard --}}
                 <a href="{{ route('dashboard') }}" style="--i:4;" title="Mon espace" class="user-account-link" aria-label="Mon espace">
                     @if ($userImage)
                         <img src="{{ $userImage }}" alt="Photo de profil de {{ $userName }}" class="user-avatar" width="40" height="40">
@@ -51,12 +61,26 @@
                     @endif
                 </a>
             @else
-                {{-- si l'utilisateur n'est pas connécté lien vers login/register --}}
                 <a href="{{ route('login') }}" style="--i:4;" title="Se connecter / S'inscrire">
                     <i class="bx bxs-user-x text-red-500"></i>
                 </a>
             @endauth
-            
         </nav>
-        
+
+        <div class="search-overlay" id="searchOverlay" aria-hidden="true">
+            <form action="{{ route('product.list') }}" method="GET" class="search-form">
+                <i class='bx bx-search search-form-icon'></i>
+                <input
+                    type="text"
+                    name="search"
+                    id="searchInput"
+                    placeholder="Rechercher un produit, une marque..."
+                    class="search-input"
+                    autocomplete="off"
+                >
+                <button type="button" id="searchClose" class="search-close-btn" aria-label="Fermer la recherche">
+                    <i class='bx bx-x'></i>
+                </button>
+            </form>
+        </div>
 </header>

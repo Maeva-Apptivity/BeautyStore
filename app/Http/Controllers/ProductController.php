@@ -11,11 +11,22 @@ use function Laravel\Prompts\alert;
 class ProductController extends Controller
 {
     // Affiche tous les produits
-    public function index()
+    public function index(Request $request)
     {
-        // récupère les produits par ordre décroissant du plus récent au plus ancien
-        $products = Product::with(['brand', 'category'])->orderBy('created_at', 'desc')->paginate(12);
-        return view('product.products-list',compact('products'));
+        $query = Product::with(['brand', 'category'])->orderBy('created_at', 'desc');
+
+        if ($request->filled('search')) {
+            $search = $request->search;
+            $query->where(function ($q) use ($search) {
+                $q->where('name', 'like', "%{$search}%")
+                  ->orWhere('description', 'like', "%{$search}%")
+                  ->orWhereHas('brand', fn ($b) => $b->where('name', 'like', "%{$search}%"));
+            });
+        }
+
+        $products = $query->paginate(12)->withQueryString();
+        $search = $request->search;
+        return view('product.products-list', compact('products', 'search'));
     }
 
     // Affiche un produit en détail

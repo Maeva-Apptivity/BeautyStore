@@ -7,6 +7,7 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\GoogleAuthController;
+use App\Http\Controllers\WishlistController;
 
     Route::get('/',[HomeController::class,'index'])->name('homepage');
 
@@ -20,7 +21,13 @@ use App\Http\Controllers\GoogleAuthController;
         Route::get('/products','index')->name('product.list');
         Route::get('/products/{slug}','show')->name('product.show');
         Route::get('/brand/{slug}/','getProductsByBrand')->name('product.by.brand');
-        
+    });
+
+    // ROUTE DES FAVORIS
+    Route::controller(WishlistController::class)->group(function(){
+        Route::get('/favoris','index')->name('wishlist.index');
+        Route::post('/favoris/toggle','toggle')->name('wishlist.toggle');
+        Route::delete('/favoris/{id}','remove')->name('wishlist.remove');
     });
 
     // ROUTE DU PANIER
