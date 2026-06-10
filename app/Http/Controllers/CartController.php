@@ -63,6 +63,7 @@ class CartController extends Controller
         }else{
             // gestion du panier invité
             $guestCart = session()->get('cart',[]);
+            $productImage = $product->displayImage();
 
             if(isset($guestCart[$product->id])){
                 //  si produit déja présent incrémenté
@@ -73,7 +74,7 @@ class CartController extends Controller
                 $guestCart[$product->id] = [
                     'name' => $product->name,
                     'price'=> $product->price,
-                    'image'=> $product->image,
+                    'image'=> $productImage,
                     'quantity'=> 1,
                 ];
             }
@@ -88,7 +89,7 @@ class CartController extends Controller
             'success'=> true,
             'name'=> $product->name,
             'price'=> $product->price,
-            'image'=> $product->image,
+            'image'=> $product->displayImage(),
             'cartCount'=> $totalItemsCount,
         ]);
     }
@@ -126,6 +127,7 @@ class CartController extends Controller
     } else {
 
         $cart = session()->get('cart', []);
+        $productImage = $product->displayImage();
 
         if (isset($cart[$product->id])) {
             $cart[$product->id]['quantity'] += $qty;
@@ -133,7 +135,7 @@ class CartController extends Controller
             $cart[$product->id] = [
                 'name' => $product->name,
                 'price' => $product->price,
-                'image' => $product->image,
+                'image' => $productImage,
                 'quantity' => $qty
             ];
         }
@@ -148,7 +150,7 @@ class CartController extends Controller
         'success' => true,
         'name' => $product->name,
         'price' => $product->price,
-        'image' => $product->image,
+        'image' => $product->displayImage(),
         'quantity_added' => $qty,
         'cartCount' => $cartCount,
     ]);

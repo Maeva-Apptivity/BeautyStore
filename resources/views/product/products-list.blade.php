@@ -7,9 +7,13 @@
     <div class="products-grid">
         @if ($products->count() > 0)
             @foreach ($products as $product)
+                @php($productImage = $product->displayImage())
                 <div class="product-card">
                     <a href="{{ route('product.show', $product->slug) }}" class="product-link">
-                        <img src="{{ $product->image }}" alt="{{ $product->name }}" class="product-image" width="260" height="220" loading="lazy" decoding="async">
+                        <div class="product-image-wrapper">
+                            <img src="{{ $productImage }}" alt="{{ $product->name }}" class="product-image" width="260" height="260" loading="lazy" decoding="async">
+                        </div>
+                        <p class="product-meta">{{ $product->brand->name ?? $product->category->name ?? 'BeautyStore' }}</p>
                         <h2 class="product-name">{{ $product->name }}</h2>
                         <p class="product-price">{{ $product->price }}€</p>
                     </a>
@@ -21,7 +25,7 @@
                         data-id="{{ $product->id }}"
                         data-name="{{ $product->name }}"
                         data-price="{{ $product->price }}"
-                        data-image="{{ $product->image }}"
+                        data-image="{{ $productImage }}"
                     > Ajouter à ma routine </button>
                 </div>
             @endforeach

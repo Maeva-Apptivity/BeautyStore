@@ -34,13 +34,19 @@ class GoogleAuthController extends Controller
                     'last_name'  => $parts[1] ?? '',
                     'email'      => $googleUser->getEmail(),
                     'google_id'  => $googleUser->getId(),
+                    'avatar'     => $googleUser->getAvatar(),
                     'password'   => bcrypt(Str::random(16)),
                 ]);
                 
                 $isNewUser = true;
             } elseif (!$user->google_id) {
                 // Si l'utilisateur existe déjà mais sans google_id, on met à jour
-                $user->update(['google_id' => $googleUser->getId()]);
+                $user->update([
+                    'google_id' => $googleUser->getId(),
+                    'avatar' => $googleUser->getAvatar(),
+                ]);
+            } elseif (!$user->avatar && $googleUser->getAvatar()) {
+                $user->update(['avatar' => $googleUser->getAvatar()]);
             }
 
             // Connexion

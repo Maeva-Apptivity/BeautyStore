@@ -4,8 +4,8 @@
         </a>
         <input type="checkbox" id="check">
         <label for="check" class="icons" aria-label="Ouvrir le menu">
-            <i class='bxr  bx-menu'  id="menu-icon"></i> 
-            <i class='bxr  bxs-x'  id="close-icon"></i> 
+            <i class='bx bx-menu' id="menu-icon"></i>
+            <i class='bx bx-x' id="close-icon"></i>
         </label>
 
         <nav class="navbar">
@@ -23,9 +23,24 @@
         </a>
 
             @auth
-                {{-- Si l'utilisateur est connecté lien vers le dasboard --}}
-                <a href="{{ route('dashboard') }}" style="--i:4;" title="Mon espace">
-                    <i class="bx bxs-user-check text-green-500"></i>
+                @php
+                    $userImage = auth()->user()->avatar
+                        ?? auth()->user()->image
+                        ?? auth()->user()->profile_photo_url
+                        ?? null;
+
+                    if ($userImage && ! \Illuminate\Support\Str::startsWith($userImage, ['http://', 'https://', '/'])) {
+                        $userImage = asset('storage/' . ltrim($userImage, '/'));
+                    }
+                @endphp
+
+                {{-- Si l'utilisateur est connecté lien vers le dashboard --}}
+                <a href="{{ route('dashboard') }}" style="--i:4;" title="Mon espace" class="user-account-link">
+                    @if ($userImage)
+                        <img src="{{ $userImage }}" alt="Mon espace" class="user-avatar" width="40" height="40">
+                    @else
+                        <i class="bx bxs-user-check text-green-500"></i>
+                    @endif
                 </a>
             @else
                 {{-- si l'utilisateur n'est pas connécté lien vers login/register --}}

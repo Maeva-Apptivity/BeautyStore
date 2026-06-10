@@ -1,21 +1,25 @@
 @extends('layouts.layouts')
 @section('content')
+@php
+    $productImage = $product->displayImage();
+    $galleryImages = $product->displayGalleryImages();
+@endphp
 
 <div class="product-detail">
     <div class="gallery-image">
 
         {{-- GALLERY D'IMAGES  --}}
         <div class="thumbnails">
-            <img src="{{ $product->image }}" alt="{{ $product->name }}" onclick="changeImage('{{ $product->image }}')" class="thumbnail active" width="80" height="80">
+            <img src="{{ $productImage }}" alt="{{ $product->name }}" onclick="changeImage('{{ $productImage }}')" class="thumbnail active" width="80" height="80">
 
-            @foreach ($product->gallery_images ?? [] as $img)
+            @foreach ($galleryImages as $img)
                 <img src="{{ $img }}" alt="{{ $product->name }}" onclick="changeImage('{{ $img }}')" class="thumbnail" width="80" height="80" loading="lazy" decoding="async">
             @endforeach
         </div>
 
         <div class="main-image-container">
             {{-- lorsque le curseur survol l'image principal un zoom ce crée --}}
-            <img id="mainImage" src="{{ $product->image }}" alt="{{ $product->name }}" class="main-image" onmousemove="zoom(event)" onmouseleave="resetZoom()" width="600" height="600" fetchpriority="high">
+            <img id="mainImage" src="{{ $productImage }}" alt="{{ $product->name }}" class="main-image" onmousemove="zoom(event)" onmouseleave="resetZoom()" width="600" height="600" fetchpriority="high">
         </div>
     </div>
     
@@ -24,10 +28,16 @@
     <div class="product-info">
 
         <button class="favorite" type="button" aria-label="Ajouter aux favoris">
-            <i class='bxr  bx-heart'></i> 
+            <i class='bx bx-heart'></i>
         </button>
 
         <h1>{{$product->name}}</h1>
+        <p class="product-detail-meta">
+            {{ $product->brand->name ?? 'BeautyStore' }}
+            @if($product->category)
+                <span>{{ $product->category->name }}</span>
+            @endif
+        </p>
         
         {{-- a mettre en fonctionnel --}}
         <div class="reviews">
@@ -52,7 +62,7 @@
                 data-id="{{ $product->id }}"
                 data-name="{{ $product->name }}"
                 data-price="{{ $product->price }}"
-                data-image="{{ $product->image }}">
+                data-image="{{ $productImage }}">
                 Ajouter à ma routine
             </button>
         </div>
@@ -64,7 +74,7 @@
             <div class="accordion-item">
                 <button class="accordion-button" type="button">
                     Description
-                    <i class='bxr  bx-chevron-down'  ></i> 
+                    <i class='bx bx-chevron-down'  ></i> 
                 </button>
                 <div class="accordion-content">
                     {!! nl2br(e($product->description)) !!}
@@ -74,7 +84,7 @@
             <div class="accordion-item">
                 <button class="accordion-button" type="button">
                     Composition
-                    <i class='bxr  bx-chevron-down'  ></i> 
+                    <i class='bx bx-chevron-down'  ></i> 
                 </button>
                 <div class="accordion-content">
                     Compo
@@ -84,7 +94,7 @@
             <div class="accordion-item">
                 <button class="accordion-button" type="button">
                     Conseil d'utilisation
-                    <i class='bxr  bx-chevron-down'  ></i> 
+                    <i class='bx bx-chevron-down'  ></i> 
                 </button>
                 <div class="accordion-content">
                     Conseils d’utilisation
